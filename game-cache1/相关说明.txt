@@ -1,0 +1,24 @@
+游戏缓存系统
+
+实现的功能：
+    <1>基于 gen_server + ets 进行开发
+    <2>提供同步和异步方式的 获取、设置、删除操作；考虑方法的批量操作等封装
+    <3>处理缓存数据的启动加载和入库保存（未具体实现入库）
+    <4>考虑性能和异常处理
+
+缓存设计：
+    共五个模块，缓存用户API模块(game_cache)，应用行为模式模块(game_cache_app)，监督者模块(game_cache_sup)，
+    值存储进程模块(game_cache_store)，键和值存储进程之间映射关系的存储模块(game_cache_mapping)
+
+运行方式：
+    rebar3 compile
+    rebar3 shell
+    > game_cache:start().
+    > game_cache:get(user1).
+    > game_cache:set_batch([{user3,300},{user4,400}]).
+    > game_cache:get_batch([user1,user3]).
+    > game_cache:delete(user3).
+    > game_cache:delete_batch([user1,user2]).
+
+
+
