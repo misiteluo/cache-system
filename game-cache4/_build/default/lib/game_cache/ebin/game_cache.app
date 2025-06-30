@@ -1,0 +1,11 @@
+{application,game_cache,
+             [{description,"A game cache system"},
+              {vsn,"0.1.0"},
+              {registered,[game_cache_sup,game_cache_mapping]},
+              {mod,{game_cache_app,[]}},
+              {applications,[kernel,stdlib]},
+              {env,[]},
+              {modules,[game_cache,game_cache_app,game_cache_mapping,
+                        game_cache_sup]},
+              {licenses,["Apache-2.0"]},
+              {links,[]}]}.
