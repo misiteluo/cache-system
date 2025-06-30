@@ -1,0 +1,20 @@
+游戏缓存系统
+
+实现的升级：
+    原game_cache_mapping:check_consistency()接口负责遍历整张表进行一致性校验和处理，优化为根据本次设置/更新的kv进行针对性的校验与处理。避免在海量数据情况下可能带来的性能问题。
+
+缓存设计：
+    共五个模块，缓存用户API模块(game_cache)，应用行为模式模块(game_cache_app)，监督者模块(game_cache_sup)，
+    值存储进程模块(game_cache_store)，键和值存储进程之间映射关系的存储模块(game_cache_mapping)
+
+运行方式：
+    rebar3 shell
+    > game_cache:start().
+    > game_cache:get(user1).
+    > game_cache:set_batch([{user3,300},{user4,400}]).
+    > game_cache:get_batch([user1,user3]).
+    > game_cache:delete(user3).
+    > game_cache:delete_batch([user1,user2]).
+
+
+
