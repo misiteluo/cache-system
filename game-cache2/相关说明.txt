@@ -1,0 +1,28 @@
+游戏缓存系统
+
+实现的升级：
+    <1>使用handle_info(Msg,State) ->
+             try
+       		   do_handle_info(Msg,State)
+       	     catch
+               ....
+             End  来对gen_server的回调健壮性处理
+    <2>对game_cache_store的start_link提供注册服务名的需求
+    <3>为了保证数据的一致性，在game_cache_mapping中采取异常捕获后进行一致性自检
+    <4>使用 erlang:monitor 来监控新创建的game_cache_store的NewPid，当NewPid退出时向当前gen_server进程发送{'DOWN', Ref, process, Pid, Reason}消息,进一步提高一致性
+
+缓存设计：
+    共五个模块，缓存用户API模块(game_cache)，应用行为模式模块(game_cache_app)，监督者模块(game_cache_sup)，
+    值存储进程模块(game_cache_store)，键和值存储进程之间映射关系的存储模块(game_cache_mapping)
+
+运行方式：
+    rebar3 shell
+    > game_cache:start().
+    > game_cache:get(user1).
+    > game_cache:set_batch([{user3,300},{user4,400}]).
+    > game_cache:get_batch([user1,user3]).
+    > game_cache:delete(user3).
+    > game_cache:delete_batch([user1,user2]).
+
+
+
